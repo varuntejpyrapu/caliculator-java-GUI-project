@@ -1,4 +1,4 @@
-package caliculatorproject;
+package caliculatorproject123;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 public class caliculator {
 	int boardwidth = 360;
 	int boardheight = 540;
-	
+
 	Color customlightgray = new Color(212,212,210);
 	Color customdarkgray = new Color(80,80,80);
 	Color customblack = new Color(28,28,28);
@@ -33,7 +33,7 @@ public class caliculator {
 	String A = "0";
 	String operator = null;
 	String B = null;
-	
+
 	caliculator()
 	{
 		frame.setVisible(true);
@@ -95,6 +95,32 @@ public class caliculator {
 					JButton button = (JButton) e.getSource();
 					String buttonValue = button.getText(); 
 					if(Arrays.asList(rightsymbols).contains(buttonValue)) {
+						if(buttonValue == "=") {
+							if(A != null) {
+								B = displaylabel.getText();
+								double numA = Double.parseDouble(A);
+								Double numB = Double.parseDouble(B);
+								
+								if(operator == "+") {
+									displaylabel.setText(removezerodecimal(numA+numB));
+								}else if(operator == "-"){
+									displaylabel.setText(removezerodecimal(numA-numB));
+								}else if(operator == "×") {
+									displaylabel.setText(removezerodecimal(numA * numB));
+								}else {
+									displaylabel.setText(removezerodecimal(numA / numB));
+								}
+								clearAll();
+							}
+						}else if("+-×÷".contains(buttonValue)){
+							if(operator == null) {
+								A = displaylabel.getText();
+								displaylabel.setText("0");
+								B = "0";
+							}
+							operator = buttonValue;
+						}
+
 						
 					}else if(Arrays.asList(topsymbols).contains(buttonValue)) {
 						if(buttonValue == "AC") {
@@ -106,7 +132,9 @@ public class caliculator {
 							numdisplay *= -1;
 							displaylabel.setText(removezerodecimal(numdisplay));
 						}else if(buttonValue == "%"){
-							
+							double numdisplay = Double.parseDouble(displaylabel.getText());
+							numdisplay /= 100;
+							displaylabel.setText(removezerodecimal(numdisplay));
 						}
 						
 					}else {
@@ -151,8 +179,5 @@ public class caliculator {
 		return Double.toString(numdisplay);  
 		
 	}
+
 }
- 
-	
-
-
